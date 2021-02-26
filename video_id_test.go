@@ -35,7 +35,7 @@ func TestExtractVideoID(t *testing.T) {
 			expectedErr: ErrInvalidCharsInVideoID,
 		},
 		{
-			name:        "video ID small length",
+			name:        "video ID is less than 10 characters",
 			link:        "xisZPyKw",
 			want:        "",
 			wantErr:     true,
