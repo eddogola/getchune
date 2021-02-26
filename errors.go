@@ -16,6 +16,8 @@ var (
 	ErrNoFormats = errors.New("no new formats found in server")
 	// ErrPlayabilityStatusNotOk video can't be downloaded
 	ErrPlayabilityStatusNotOk = errors.New("video playability status not ok")
+	// ErrCipherNotFound cipher for specific video not found
+	ErrCipherNotFound = errors.New("cipher not found")
 )
 
 // ErrUnexpectedStatusCode associated with http status code

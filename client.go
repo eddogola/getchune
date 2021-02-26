@@ -39,6 +39,41 @@ func (c *Client) GetVideoWithContext(ctx context.Context, videoID string) (*Vide
 	return v, err
 }
 
+// GetStream returns the http.Response for a specific format
+func (c *Client) GetStream(v *Video, format *Format) (*http.Response, error) {
+	return c.GetStreamWithContext(context.Background(), v, format)
+}
+
+// GetStreamWithContext returns the http.Response for a specific format with a context
+func (c *Client) GetStreamWithContext(ctx context.Context, v *Video, format *Format) (*http.Response, error) {
+	url, err := c.GetStreamURL(ctx, v, format)
+	if err != nil {
+		return nil, err
+	}
+
+	return c.httpGet(ctx, url)
+}
+
+// GetStreamURL returns the url of a specific format
+func (c *Client) GetStreamURL(ctx context.Context, v *Video, format *Format) (string, error) {
+	return c.GetStreamURLWithContext(ctx, v, format)
+}
+
+// GetStreamURLWithContext returns the url of a specific format with a context
+func (c *Client) GetStreamURLWithContext(ctx context.Context, v *Video, format *Format) (string, error) {
+	if format.URL != "" {
+		return format.URL, nil
+	}
+
+	cipher := format.Cipher
+	if cipher == "" {
+		return "", ErrCipherNotFound
+	}
+
+	return c.decipherURL(ctx, v.ID, format)
+}
+
+
 func (c *Client) httpGet(ctx context.Context, url string) (*http.Response, error) {
 	client := c.HTTPClient
 	if client == nil {

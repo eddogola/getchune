@@ -27,6 +27,7 @@ type playerResponseData struct {
 type Format struct {
 	ItagNo           int    `json:"itag"`
 	URL              string `json:"url"`
+	Cipher           string `json:"cipher"`
 	MimeType         string `json:"mimeType"`
 	Bitrate          int    `json:"bitrate"`
 	Width            int    `json:"width"`
